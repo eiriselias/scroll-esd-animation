@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+[animation-up="move"]{
+    opacity: 0;
+    transform: translateY(100%);
+    transition: 2s ease-in;
+
+    --opacity:1;
+    --transform:translateY(0) ;
+}
+
+.unset{
+    opacity: var(--opacity);
+    transform: var(--transform);
+}

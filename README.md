@@ -1,27 +1,46 @@
-# ScrollEsdAnimation
+# Scroll ESD animation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.8.
+Este repositorio sera creado para guardar animaciones de scroll que valla creando y poder utilizarlas en otras plantillas.
 
-## Development server
+al iniciar un proyecto de angular primero creare una carpeta dentro de la carpeta assets y la llamare js, donde creare el archivo animations.js
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+tambien creare un servicio para poder agregar el archivo js a mi proyecto de angular al cual llamare animation
 
-## Code scaffolding
+y en el archivo principal styles.css es donde guardare las diferentes animaciones para utilizarlas de manera global en los componentes.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ingresamos al servicio y agregamos la siguiente funcion
 
-## Build
+    public loadScript(){
+        console.log("loading to scripts");
+        let node = document.createElement("script");
+        node.src = "assets/js/animations.js";
+        node.type = "text/javascripts";
+        node.async = true;
+        document.getElementsByTagName('head')[0].appendChild(node);
+    }
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+este servicio lo inyectaremos en el app.component.ts y en su constructor llamamos la funcionn loadScript
 
-## Running unit tests
+    constructor(private animationServe: AnimationService){
+        this.animationServe.loadScript();
+    }
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+en el archivo animations.js agregamos el siguiente  script
 
-## Running end-to-end tests
+    const animate =  document.querySelectorAll(".animation");
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+    function callback(entries){
+        entries.forEach(entry => {
+            const animation = entry.target;
+            animation.classList.toggle('unset', entry.isIntersecting);
+        });
+    }
 
-## Further help
+    const options = {
+        root:null,
+        rootMargin:"0px",
+        threshold:0.25,
+    }
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    const observer = new IntersectionObserver(callback, options);
+
