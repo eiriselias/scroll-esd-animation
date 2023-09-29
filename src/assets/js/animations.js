@@ -1,5 +1,6 @@
 const animates =  document.querySelectorAll(".animation");
 
+
 function callback(entries){
     
     entries.forEach(entry => {

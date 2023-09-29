@@ -11,7 +11,7 @@ export class AnimationService {
     console.log("loading to scripts");
     let node = document.createElement("script");
     node.src = "assets/js/animations.js";
-    node.type = "text/javascripts";
+    node.type = "text/javascript";
     node.async = true;
     document.getElementsByTagName('head')[0].appendChild(node);
   }
